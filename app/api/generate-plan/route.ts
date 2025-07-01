@@ -29,7 +29,8 @@ export async function POST(request: NextRequest) {
         model: process.env.GEMINI_MODEL || "gemini-1.5-flash",
         contents: prompt,
         config,
-      });
+        temperature: 1.5,
+      } as any);
     } catch (err: any) {
       console.error("Gemini API error:", err, JSON.stringify(err));
       return NextResponse.json(
@@ -82,17 +83,37 @@ export async function POST(request: NextRequest) {
 function constructPrompt(constraints: TripConstraints): string {
   const { origin, duration_days, budget_range, trip_type, travel_month, travel_style } = constraints;
   
-  return `You are a travel planner for urban Indians. Create a ${duration_days}-day ${trip_type} trip from ${origin} in ${travel_month} under ₹${budget_range}${travel_style ? ` with a ${travel_style} travel style` : ''}.
+  return `
+You are a creative and resourceful travel planner for urban Indians. Your goal is to generate a unique, memorable, and practical ${duration_days}-day ${trip_type} trip from ${origin} in ${travel_month}, under ₹${budget_range}{styleText}.
 
-Include:
-- Destination suggestion (reachable and suitable for the budget and trip type)
-- Day-wise itinerary (with morning, afternoon, evening slots)
-- Local food and stay suggestions
-- Budget breakdown per day
+Instructions:
+- Choose a destination that is suitable for this trip type and budget.
+- Based on the origin and destination, select a suitable mode of travel (e.g., flight, train, bus, self-drive) that fits within the budget.
+- Calculate the **approximate round-trip travel cost** based on typical fares for that route and mode.
+- Include **travel time and mode** in the plan (especially if it affects Day 1 or the last day).
+- Deduct this cost from the overall budget and reflect it in both \`budget_summary\` and daily plans if applicable.
+- For each day, create a detailed itinerary with morning, afternoon, and evening activities. Include at least one offbeat or local experience daily.
+- Recommend at least two food places and two places to stay — one of which should be a hidden gem.
+- Add a surprise element (quirky cafe, secret viewpoint, local event, etc.).
+- Provide travel tips and avoid generic suggestions.
+- Output only valid JSON in the format below. No explanations or sources.
+- Generate exactly {duration_days} entries under "plan_days".
 
-Output as structured JSON with this exact format:
+Output format:
 {
   "destination": "Destination Name",
+  "to_destination_travel": {
+    "mode": "Train/Flight/Bus/Drive",
+    "cost": 1200,
+    "duration_hours": 5,
+    "notes": "Sleeper train from Chennai to Coorg"
+  },
+  "return_travel": {
+    "mode": "Train/Flight/Bus/Drive",
+    "cost": 1200,
+    "duration_hours": 6,
+    "notes": "Evening bus from Coorg to Chennai"
+  },
   "plan_days": [
     {
       "day": 1,
@@ -120,17 +141,17 @@ Output as structured JSON with this exact format:
     }
   ],
   "budget_summary": {
-    "total": 9500,
+    "total": 10000,
     "stay": 4000,
-    "travel": 2500,
+    "travel": 2400,
     "food": 2000,
-    "activities": 1000
+    "activities": 1600
   },
   "travel_tips": [
     "Tip 1",
-    "Tip 2"
+    "Tip 2",
+    "Tip 3"
   ]
 }
-
-Make sure the destination is reachable from ${origin} within the budget and suitable for a ${trip_type} trip. Keep all suggestions practical and budget-friendly.`;
-} 
+  `;
+}

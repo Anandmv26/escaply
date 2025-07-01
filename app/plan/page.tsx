@@ -7,17 +7,20 @@ import { ArrowLeft, MapPin, Calendar, DollarSign, Users, Car } from 'lucide-reac
 import Link from 'next/link';
 import { TripConstraints, TripType, TravelStyle } from '@/types';
 import toast from 'react-hot-toast';
+import { Pacifico } from 'next/font/google'
+
+const pacifico = Pacifico({ subsets: ['latin'], weight: '400', display: 'swap' })
 
 export default function PlanPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<TripConstraints>({
     origin: '',
-    duration_days: 3,
-    budget_range: '5000-10000',
-    trip_type: 'chill',
+    duration_days: undefined,
+    budget_range: '',
+    trip_type: undefined,
     travel_month: '',
-    travel_style: 'comfort'
+    travel_style: undefined
   });
 
   const tripTypes: { value: TripType; label: string; icon: string }[] = [
@@ -51,7 +54,7 @@ export default function PlanPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.origin || !formData.travel_month) {
+    if (!formData.origin || !formData.duration_days || !formData.budget_range || !formData.trip_type || !formData.travel_month) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -87,16 +90,21 @@ export default function PlanPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-misty-cream via-sand to-sky-blue py-8">
       <div className="container mx-auto px-4 max-w-2xl">
+        {/* Escaply Logo Top Left */}
+        <div className="flex items-center mb-4">
+          <Link href="/" className="inline-block focus:outline-none">
+            <span className={`text-2xl sm:text-3xl font-bold text-gradient ${pacifico.className}`}
+              style={{ letterSpacing: '0.01em', paddingTop: '0.1em', paddingBottom: '0.2em' }}>
+              Escaply
+            </span>
+          </Link>
+        </div>
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <Link href="/" className="inline-flex items-center text-lagoon hover:text-teal mb-4">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Link>
           <h1 className="text-4xl font-bold text-charcoal mb-2">Plan Your Trip</h1>
           <p className="text-deep-slate">Tell us your preferences and we'll create the perfect itinerary</p>
         </motion.div>

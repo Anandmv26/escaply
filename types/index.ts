@@ -1,8 +1,8 @@
 export interface TripConstraints {
   origin: string;
-  duration_days: number;
-  budget_range: string;
-  trip_type: TripType;
+  duration_days?: number;
+  budget_range?: string;
+  trip_type?: TripType;
   travel_month: string;
   travel_style?: TravelStyle;
 }
@@ -43,6 +43,18 @@ export interface BudgetSummary {
 
 export interface TripPlan {
   destination: string;
+  to_destination_travel: {
+    mode: string;
+    cost: number;
+    duration_hours: number;
+    notes: string;
+  };
+  return_travel: {
+    mode: string;
+    cost: number;
+    duration_hours: number;
+    notes: string;
+  };
   plan_days: DayPlan[];
   accommodation_suggestions: AccommodationSuggestion[];
   food_recommendations: FoodRecommendation[];

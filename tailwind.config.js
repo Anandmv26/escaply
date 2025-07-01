@@ -19,6 +19,21 @@ module.exports = {
         'deep-slate': '#34495E',
         'soft-green': '#7FB069',
         'stone': '#A8A8A8',
+        // Pastel variants
+        'sky-blue-pastel': 'rgba(135, 206, 235, 0.18)',
+        'lagoon-pastel': 'rgba(72, 202, 228, 0.18)',
+        'terra-coral-pastel': 'rgba(255, 107, 107, 0.18)',
+        'teal-pastel': 'rgba(32, 178, 170, 0.18)',
+        'soft-green-pastel': 'rgba(127, 176, 105, 0.18)',
+        'sand-pastel': 'rgba(245, 241, 232, 0.7)',
+        'misty-cream-pastel': 'rgba(248, 246, 242, 0.7)',
+        // Pastel theme additions
+        'pastel-green': '#B8E0D2',
+        'pastel-blue': '#BFD7ED',
+        'pastel-sand': '#FDF6E3',
+        'pastel-sky': '#D6EFFF',
+        'pastel-mountain': '#C3E6CB',
+        'pastel-beach': '#FFF5E1',
       },
       fontFamily: {
         'geometric': ['Inter', 'Roboto Flex', 'sans-serif'],

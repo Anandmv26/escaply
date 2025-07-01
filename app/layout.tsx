@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Pacifico, Quicksand } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
+const pacifico = Pacifico({ subsets: ['latin'], weight: '400', display: 'swap' })
+const quicksand = Quicksand({ subsets: ['latin'], weight: ['400', '500', '700'], display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'Escaply - Plan your next trip in 10 minutes',
@@ -17,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-misty-cream min-h-screen`}>
+      <body className={`${quicksand.className} bg-misty-cream min-h-screen`}>
         <Toaster 
           position="top-center"
           toastOptions={{

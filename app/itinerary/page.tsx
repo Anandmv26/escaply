@@ -118,6 +118,35 @@ ${tripPlan.travel_tips.map(tip => `• ${tip}`).join('\n')}
           </div>
         </motion.div>
 
+        {/* Travel Details */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="card mb-8"
+        >
+          <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-2">
+            <MapPin className="w-6 h-6 text-teal" />
+            Travel Details
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="font-semibold text-charcoal mb-2">To Destination</h3>
+              <p><span className="font-medium">Mode:</span> {tripPlan.to_destination_travel.mode}</p>
+              <p><span className="font-medium">Cost:</span> ₹{tripPlan.to_destination_travel.cost}</p>
+              <p><span className="font-medium">Duration:</span> {tripPlan.to_destination_travel.duration_hours} hours</p>
+              <p><span className="font-medium">Notes:</span> {tripPlan.to_destination_travel.notes}</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-charcoal mb-2">Return Travel</h3>
+              <p><span className="font-medium">Mode:</span> {tripPlan.return_travel.mode}</p>
+              <p><span className="font-medium">Cost:</span> ₹{tripPlan.return_travel.cost}</p>
+              <p><span className="font-medium">Duration:</span> {tripPlan.return_travel.duration_hours} hours</p>
+              <p><span className="font-medium">Notes:</span> {tripPlan.return_travel.notes}</p>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Itinerary */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
